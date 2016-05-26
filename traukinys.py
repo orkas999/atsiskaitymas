@@ -8,6 +8,29 @@ import doctest
 class Traukinys():
 
     def __init__(self, name):
+        """test init
+    >>> a = Traukinys("Third Reich")
+
+        >>> print(a)
+        Traukinys: Traukinys, visa masė: 140,
+                   traukinio galia: 500, visa krovinio mase 0
+                   lokomotyvų skaičius = 1, vagonų skaičius = 1
+
+        >>> a.add_lok("Berlin ",100,500)
+        lokomotyvas sekmingai pridetas
+
+        >>> a.add_vag(350, 40,500)
+        vagonas sekmingai pridetas
+
+        >>> print(a)
+        traukinys: Traukinys, Dabartine sastato mase: 140,
+                   galia: 500, bendra kroviniu mase 0
+                   lokomotyvu = 1, vagonu = 1
+
+        >>> a.pakrauti_krovini(100)
+        pavyko prideti krovini i vagons1 dar liko 400 vietos siame vagone
+
+      """
         self.nameTraukinys = name
         self.lokomotyvas = []
         self.vagonas = []
@@ -15,12 +38,13 @@ class Traukinys():
         self.tempGalia = 0
         self.visaMase = 0
 
+
     def jdefault(o):
         if isinstance(o, set):
             return list(o)
         return o.__dict__
 
-    def addLokomotyvas(self, name, mase, didTemp):
+    def add_lok(self, name, mase, didTemp):
         if didTemp >= mase:
             self.lokomotyvas.append(Lokomotyvas(name, mase, didTemp))
             self.tempGalia += didTemp
@@ -29,7 +53,7 @@ class Traukinys():
         else:
             return print("Lokomotyvo tempimo galia maženė už jo paties masę, lokomotyvas nepridėtas ")
 
-    def addVagonas(self, ID, mase, didMase):
+    def add_vag(self, ID, mase, didMase):
         if self.tempGalia < self.visaMase + mase:
             return print("Vagonas neprikabintas, lokomotyvai nebegali daugiau patempti vagonų")
         else:
@@ -37,30 +61,30 @@ class Traukinys():
             self.visaMase += mase
             print("Vagonas prikabintas")
 
-    def setTrainStats(self, mase, krovMase, galia):
+    def set_train_stats(self, mase, krovMase, galia):
         self.kroviniuMase = krovMase
         self.tempGalia = galia
         self.visaMase = mase
 
-    def getGaliaTrauk(self):
+    def get_train_galia(self):
         return print("Traukinio tempimo galia: %s" % (self.tempGalia))
 
-    def galiaTrauk(self):
+    def get_train_temp(self):
         return self.tempGalia
 
-    def maseTrauk(self):
+    def visa_mase(self):
         return self.visaMase
 
-    def bendraKrovMaseTrauk(self):
+    def get_all_krov_mase(self):
         return self.kroviniuMase
 
-    def getLokomotyvas(self):
+    def get_lokomotyvas(self):
         return self.lokomotyvas
 
-    def getVagonas(self):
+    def get_vagonas(self):
         return self.vagonas
 
-    def getTrainName(self):
+    def get_train_name(self):
         return self.nameTraukinys
 
     def __str__(self):
@@ -76,7 +100,7 @@ class Traukinys():
     def __repr__(self):
         return "<%s>" % (self.nameTraukinys)
 
-    def pakrautiKrovini(self, masKrov):
+    def pakrauti_krovini(self, masKrov):
         if self.tempGalia < self.visaMase + masKrov:
             return print("krovinio masė viršija traukinio pajėgumus, krovinys nepridėtas")
         else:
@@ -95,7 +119,7 @@ class Traukinys():
             return print("Krovinys nepridėtas, neužtenka vietos")
 
 
-def Issaugoti(sarasas):
+def issaugoti(sarasas):
     with open('trauk_sąrašas.json', 'w') as fp:
         lok_listas = []
         for trauk in range(0, len(sarasas)):
@@ -107,7 +131,7 @@ def Issaugoti(sarasas):
                         "lokomotyvas": traukinys.lokomotyvas[i].getLokName(),
                         "mase": traukinys.lokomotyvas[i].getLokMase(),
                         "galia": traukinys.lokomotyvas[i].getLokGalia()}
-                    lok_listas.append(lokomotyvai)
+                lok_listas.append(lokomotyvai)
 
             if(traukinys.vagonas != 0):
                 vag_listas = []
@@ -118,7 +142,7 @@ def Issaugoti(sarasas):
                         "mase": traukinys.vagonas[j].getVagMase(),
                         "max_mase": traukinys.vagonas[j].getVagMaxMase(),
                         "kroviniu_mase": traukinys.vagonas[j].getVagMaseKroviniu()}
-                    vag_listas.append(vagonai)
+                vag_listas.append(vagonai)
 
             traukiniai = {
                 "Pavadinimas": traukinys.nameTraukinys,
@@ -136,7 +160,7 @@ def Issaugoti(sarasas):
         return a - b
 
 
-def Skaityti():
+def skaityti():
     data = []
     return_listas = []
     with open('trauk_sąrašas.json', 'r') as failas:
@@ -145,13 +169,13 @@ def Skaityti():
 
         for item in data:
             new_train = Traukinys(item["Pavadinimas"])
-            new_train.setTrainStats(item["visa traukinio mase"],
+            new_train.add_lok(item["visa traukinio mase"],
                                     item["visa kroviniu mase"],
                                     item["galia"])
             for j in item["vagonai"]:
                 temp_vagonas = Vagonas(j["ID"], j["mase"],
                                        j["max_mase"])
-                temp_vagonas.setMasKrov(j["kroviniu_mase"])
+                temp_vagonas.set_mas_krov(j["kroviniu_mase"])
                 new_train.vagonas.append(temp_vagonas)
 
             for z in item["lokomotyvai"]:

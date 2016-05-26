@@ -1,17 +1,11 @@
 from lokomotyvas import Lokomotyvas
 from vagonas import Vagonas
-from traukinys import Traukinys, Skaityti, Issaugoti
+from traukinys import Traukinys, skaityti, issaugoti
 import doctest
 
 def Meniu():
-    """test init
-
-        >>> 1
-        >>> 1
-
-    """
     ats = True
-    sarasas = Skaityti()
+    sarasas = skaityti()
     if len(sarasas) > 0:
         traukinys = sarasas[0]
     else:
@@ -35,17 +29,17 @@ def Meniu():
         try:
             pas = str(input())
             if (pas == 'G'):
-                def galiaTrauk(sarasas):
+                def get_train_temp(sarasas):
                     return traukinys.tempGalia
-                print(sorted(sarasas, key=galiaTrauk))
+                print(sorted(sarasas, key=get_train_temp))
             if (pas == 'M'):
-                def maseTrauk(sarasas):
+                def visa_mase(sarasas):
                     return traukinys.visaMase
-                print(sorted(sarasas, key=maseTrauk))
+                print(sorted(sarasas, key=visa_mase))
             if (pas == 'K'):
-                def bendraKrovMaseTrauk(sarasas):
+                def get_all_krov_mase(sarasas):
                     return traukinys.kroviniuMase
-                print(sorted(sarasas, key=bendraKrovMaseTrauk))
+                print(sorted(sarasas, key=get_all_krov_mase))
         except ValueError:
             print("bloga ivestis")
 
@@ -121,7 +115,7 @@ def Meniu():
                     galia = int(input())
                     if mase <= 0 or galia < 0:
                         raise ValueError
-                    traukinys.addLokomotyvas(pavadinimas, mase, galia)
+                    traukinys.add_lok(pavadinimas, mase, galia)
                 except ValueError:
                     print("bloga įvestis")
                     return ats == True
@@ -142,7 +136,7 @@ def Meniu():
                     mase = int(input())
                     if svoris <= 0 or mase < 0:
                         raise ValueError
-                    traukinys.addVagonas(ID, svoris, mase)
+                    traukinys.add_vag(ID, svoris, mase)
                 except ValueError:
                     print("bloga įvestis")
                     return ats == True
@@ -159,7 +153,7 @@ def Meniu():
             krovinys = int(input())
             if krovinys < 0:
                 raise ValueError
-            traukinys.pakrautiKrovini(krovinys)
+            traukinys.pakrauti_krovini(krovinys)
         except ValueError:
             print("bloga ivestis")
             return pas == True
@@ -175,7 +169,7 @@ def Meniu():
                 mase = int(input())
                 if svoris <= 0 or mase < 0:
                     raise ValueError
-                traukinys.addVagonas(ID, svoris, mase)
+                traukinys.add_vag(ID, svoris, mase)
             except ValueError:
                 print("bloga įvestis")
                 return pas == True
@@ -194,7 +188,7 @@ def Meniu():
                 galia = int(input())
                 if mase <= 0 or galia < 0:
                     raise ValueError
-                traukinys.addLokomotyvas(pavadinimas, mase, galia)
+                traukinys.add_lok(pavadinimas, mase, galia)
             except ValueError:
                 print("bloga įvestis")
                 return ats == True
@@ -252,7 +246,7 @@ def Meniu():
             elif ats == 2:
                 pasirinkimas2(sarasas, traukinys, ats)
             elif ats == 3:
-                Issaugoti(sarasas)
+                issaugoti(sarasas)
                 print("sąrašas išsaugotas")
 
         except ValueError:
@@ -263,5 +257,5 @@ def Meniu():
 
 
 if __name__ == "__main__":
-    #Meniu()
+    Meniu()
     doctest.testmod()

@@ -2,6 +2,19 @@ import doctest
 class Lokomotyvas:
 
     def __init__(self, name, mase, didTemp):
+        """test init
+    >>> a = Lokomotyvas("Third Reich",1500,9000)
+        >>> print(a)
+        Lokomotyvas = Third Reich  Mase = 1500, tempiamoji galia = 9000
+
+        >>> a.getLokName()
+        'Third Reich'
+        >>> a.getLokMase()
+        1500
+        >>> a.getLokGalia()
+        9000
+        """
+
         self.name = name
         self.mase = mase
         self.didTemp = didTemp
