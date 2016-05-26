@@ -1,0 +1,8 @@
+Programa paleidžiama per main.py
+
+Meniu sąsajoje vykdomos komandos per komandinę eilutę, įvedant komandos numerio sveikąjį skaičių
+
+Ši programa sugeba:
+  1. Sukurti Traukinio, Vagonų, Lokomotyvų klases
+  2. Saugoti/ skaityti duomenis json faile
+  3. Koreguoti esamus duomenis (trinti, pridėti, analizuoti)
